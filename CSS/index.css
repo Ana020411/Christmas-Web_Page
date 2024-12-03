@@ -53,6 +53,7 @@
 
 body {
     font-family: 'Lora', serif;
+    background-color: rgb(246, 249, 240);
 }
 
 h1, h2, h3, h4, h5 {
@@ -61,4 +62,25 @@ h1, h2, h3, h4, h5 {
 
 .transition-all {
     transition: all 0.3s ease;
+}
+
+
+footer {
+  background-color: rgb(56, 97, 67);
+  color: white;
+  padding: 20px 0;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.footer-content div {
+  margin-bottom: 10px;
+}
+.social-icons a {
+  color: white;
+  margin: 0 10px;
+  font-size: 1.5em;
 }

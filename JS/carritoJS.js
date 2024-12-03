@@ -6,6 +6,14 @@ const validUsers = [
 
 // Cart items and cart state
 let cart = [];
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar carrito desde localStorage al cargar la página
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCartDisplay();
+    }
+}); 
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -25,31 +33,43 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 });
 
 // Function to add items to cart (to be called from product pages)
-function addToCart(productName, price) {
-    const existingProduct = cart.find(item => item.name === productName);
+function addToCart(product) {
+    // Asegúrese de que el producto tenga la estructura correcta
+    const cartProduct = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1
+    };
+
+    const existingProduct = cart.find(item => item.id === cartProduct.id);
     
     if (existingProduct) {
         existingProduct.quantity += 1;
     } else {
-        cart.push({
-            name: productName,
-            price: price,
-            quantity: 1
-        });
+        cart.push(cartProduct);
     }
     
+    // Guardar en localStorage para persistencia entre páginas
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
     updateCartDisplay();
+    
+    alert(`${product.name} agregado al carrito`);
 }
+
+// Expose the function globally
+window.addProductToCart = addToCart;
 
 // Update cart display
 function updateCartDisplay() {
     const cartItemsContainer = document.getElementById('cartItems');
     const cartTotalSpan = document.getElementById('cartTotal');
     
-    // Clear existing items
+    // Limpiar los elementos existentes
     cartItemsContainer.innerHTML = '';
     
-    // Populate cart items
+    // Poblar los elementos del carrito
     let total = 0;
     cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
@@ -59,11 +79,7 @@ function updateCartDisplay() {
             <tr>
                 <td>${item.name}</td>
                 <td>$${item.price.toFixed(2)}</td>
-                <td>
-                    <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity(${index}, -1)">-</button>
-                    ${item.quantity}
-                    <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity(${index}, 1)">+</button>
-                </td>
+                <td>${item.quantity}</td>
                 <td>$${itemTotal.toFixed(2)}</td>
                 <td>
                     <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">Eliminar</button>
@@ -73,8 +89,33 @@ function updateCartDisplay() {
         cartItemsContainer.innerHTML += row;
     });
     
+    // Actualizar el total
     cartTotalSpan.textContent = total.toFixed(2);
 }
+
+function addProductToCart(product) {
+    const existingProduct = cart.find(item => item.id === product.id);
+    
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1
+        });
+    }
+    
+    updateCartDisplay();
+    
+    // Mostrar una alerta de que el producto fue agregado
+    alert(`${product.name} agregado al carrito`);
+}
+
+// Exponer la función globalmente
+window.addProductToCart = addProductToCart;
+
 
 // Change quantity of cart items
 function changeQuantity(index, change) {
@@ -107,4 +148,6 @@ document.getElementById('checkoutBtn').addEventListener('click', function() {
 });
 
 // Simulate adding products from other pages (you would call this from product pages)
-window.addToCart = addToCart;
+window.addToCart = function(product) {
+    window.addProductToCart(product);
+};

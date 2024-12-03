@@ -61,11 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `).join('');
 
-            // Cart functionality
-            window.addToCart = function(product) {
-                console.log(`Producto ${product} agregado al carrito`);
-                alert(`Producto ${product} agregado al carrito`);
+            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Inicializar carrito desde localStorage
+
+            window.addToCart = function (product) {
+                cart.push(product); // Agregar producto al carrito
+                localStorage.setItem('cart', JSON.stringify(cart)); // Guardar carrito en localStorage
+                alert(`Producto "${product.name}" agregado al carrito`);
+                console.log('Carrito actual:', cart);
             };
+            
         })
         .catch(error => {
             console.error('❌ Fetch Error:', error);

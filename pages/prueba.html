@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos</title>
+  <style>
+    .product-card {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .product-card img {
+      max-width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Productos</h1>
+  <div id="product-container"></div>
+
+  <script>
+    // Obtener los productos de la API
+    fetch('/products')
+      .then(response => response.json())
+      .then(products => {
+        const container = document.getElementById('product-container');
+
+        // Recorrer la lista de productos y crear elementos HTML
+        products.forEach(product => {
+          const productElement = document.createElement('div');
+          productElement.className = 'product-card';
+
+          const imageElement = document.createElement('img');
+          imageElement.src = `/assets/img/${product.img}`;
+          imageElement.alt = product.name;
+
+          const titleElement = document.createElement('h3');
+          titleElement.textContent = product.name;
+
+          const descriptionElement = document.createElement('p');
+          descriptionElement.textContent = product.description;
+
+          const priceElement = document.createElement('p');
+          priceElement.textContent = `$${product.price.toFixed(2)}`;
+
+          const addToCartButton = document.createElement('button');
+          addToCartButton.textContent = 'Agregar al carrito';
+          addToCartButton.addEventListener('click', () => addToCart(product.id));
+
+          productElement.appendChild(imageElement);
+          productElement.appendChild(titleElement);
+          productElement.appendChild(descriptionElement);
+          productElement.appendChild(priceElement);
+          productElement.appendChild(addToCartButton);
+
+          container.appendChild(productElement);
+        });
+      })
+      .catch(error => console.error('Error al cargar los productos:', error));
+
+    // Función para agregar un producto al carrito
+    function addToCart(productId) {
+      // Lógica para agregar el producto al carrito
+      console.log(`Agregando producto ${productId} al carrito`);
+    }
+  </script>
+</body>
+</html>

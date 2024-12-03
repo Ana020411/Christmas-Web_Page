@@ -33,3 +33,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+const express = require("express");
+const bodyParser = require("body-parser");
+const mysql = require("mysql2");
+
+const app = express();
+
+// Configurar body-parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Servir archivos estáticos
+app.use(express.static("public"));
+
+// Conexión a la base de datos
+const db = mysql.createConnection({
+    HOST : "127.0.0.1", //http://web.host.com:123
+    USER: "root",
+    PASSWORD: "", //tu password de root va aqui
+    DB: "mysql" 
+});
+
+// Verificar conexión
+db.connect((err) => {
+  if (err) {
+    console.error("Error al conectar con la base de datos:", err.message);
+    process.exit(1);
+  }
+  console.log("Conectado a la base de datos.");
+});
+
+// Ruta base para API
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html"); // Opcional, si quieres servir este archivo directamente
+});
+
+// Ruta para obtener productos
+app.get("/products", (req, res) => {
+  const query = "SELECT * FROM products";
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("Error al obtener los productos:", err.message);
+      res.status(500).send("Error al obtener los productos.");
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Iniciar el servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servicio funcionando en http://localhost:${PORT}`);
+});
+

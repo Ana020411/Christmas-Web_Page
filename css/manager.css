@@ -1,0 +1,119 @@
+.title {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    position: relative; 
+    margin: 20px 0; 
+    padding: 0; 
+    color: rgb(56, 97, 67);
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.title::before,
+.title::after {
+    content: "";  
+    position: absolute;
+    width: 30%; 
+    height: 2px; 
+    background-color: rgb(56, 97, 67);
+    top: 50%;  
+}
+
+.title::before {
+    left: 0; 
+    margin-left: -5%; 
+}
+.title::after {
+    right: 0;
+    margin-right: -5%;
+}
+
+label {
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    color: rgb(56, 97, 67);
+}
+
+input {
+    font-family: 'Lora', sans-serif;
+}
+
+.añadir {
+    display: flex;
+    background-color: rgb(56, 97, 67);
+    color: rgb(246, 249, 240);
+    border: none;
+    padding: 10px 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+
+}
+
+.añadir:hover {
+    background-color: rgb(246, 249, 240);
+    transform: scale(1.05);
+}
+
+
+#productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#productsTable th,
+#productsTable td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#productsTable th {
+    background-color: rgb(56, 97, 67);
+    color: rgb(246, 249, 240);
+}
+
+#productsTable td {
+    background-color: rgb(246, 249, 240);
+    color: rgb(56, 97, 67);
+}
+
+
+#productsTable tr:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.form-group label {
+    font-size: 1.1em;
+    color: rgb(56, 97, 67);
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid rgb(56, 97, 67);
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+.form-control:focus {
+    border-color: rgb(56, 97, 67);
+    box-shadow: 0 0 5px rgba(56, 97, 67, 0.5);
+}

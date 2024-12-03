@@ -1,20 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
-//uso de request con body-Parser -> json
+// Uso de CORS
+app.use(cors());
+
+// Uso de request con body-Parser -> json
 app.use(bodyParser.json());
 
-// request de contenido /algo
+// Request de contenido /algo
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//direccion base
+// Dirección base
 app.get("/", (req, res) => {
   res.json({ message: "Connected." });
 });
 
-//rutas
+// Rutas
 require("./app/routes/product.routes.js")(app);
 
 const PORT = process.env.PORT || 3000;

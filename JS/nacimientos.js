@@ -1,3 +1,38 @@
+
+const googleFontLink = document.createElement('link');
+googleFontLink.rel = 'stylesheet';
+googleFontLink.href = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap';
+document.head.appendChild(googleFontLink);
+
+// Agregar estilos al botón y texto
+const style = document.createElement('style');
+style.textContent = `
+    .card-title, .card-text, button {
+        font-family: 'Cinzel', serif;
+    }
+    .button-card{
+        background-color: rgb(56, 97, 67); 
+        color: white; 
+        cursor: pointer;
+        padding: 10px 20px; 
+        font-size: 1rem; 
+        border-radius: 5px; 
+        transition: all 0.3s ease; 
+        border: none;
+        justify-content: center;
+    }
+    .button-card:hover {
+    background-color: rgb(46, 77, 57); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); 
+    transform: translateY(-2px); 
+}
+    .card-body {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 5px; 
+    background-color: #fff; 
+`;
+
 document.addEventListener('DOMContentLoaded', () => {
     const apiUrl = 'http://localhost:3000/products';
     const featuredProductsContainer = document.querySelector('#featured-products .row');
@@ -55,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">${product.description}</p>
                             <p class="card-text">$${product.price} MXN</p>
-                            <button class="btn btn-primary w-100" style="background-color: #b33c3c; color: white;" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                            <button class="button-card" style="background-color: #b33c3c; color: white;" onclick="addToCart(${product.id})">Agregar al Carrito</button>
                         </div>
                     </div>
                 </div>
